@@ -986,16 +986,16 @@ with tabs[8]:
     )
 
     if granularidade == "Modelo":
-        group_cols = ["MODELO"]
+        group_cols = ["TIPO", "MODELO"]
         label_col = "Modelo"
     elif granularidade == "Cor":
-        group_cols = ["COR"]
+        group_cols = ["TIPO", "COR"]
         label_col = "Cor"
     elif granularidade == "Tecido":
-        group_cols = ["TECIDO"]
+        group_cols = ["TIPO", "TECIDO"]
         label_col = "Tecido"
     else:
-        group_cols = ["MODELO", "TECIDO", "COR"]
+        group_cols = ["TIPO", "MODELO", "TECIDO", "COR"]
         label_col = "Combinação"
 
     mask = pd.Series(True, index=df_v.index)
@@ -1010,10 +1010,10 @@ with tabs[8]:
     )
 
     if granularidade == "Combinação (Modelo+Tecido+Cor)":
-        abc[label_col] = abc["MODELO"] + " | " + abc["TECIDO"] + " | " + abc["COR"]
+        abc[label_col] = abc["TIPO"] + " | " + abc["MODELO"] + " | " + abc["TECIDO"] + " | " + abc["COR"]
         abc = abc[[label_col, "TOTAL"]].reset_index(drop=True)
     else:
-        abc.columns = [label_col, "TOTAL"]
+        abc = abc.rename(columns={"TIPO": "Tipo", group_cols[-1]: label_col})
 
     total_vol = abc["TOTAL"].sum()
     abc["% Volume"] = abc["TOTAL"] / total_vol * 100
