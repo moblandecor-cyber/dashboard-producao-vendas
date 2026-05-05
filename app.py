@@ -66,6 +66,15 @@ def load_sheet(sheet_name: str, sheet_encoded: str) -> pd.DataFrame:
     for col in str_cols:
         df[col] = df[col].fillna("").str.strip().str.upper()
 
+    # Normaliza modelos com dois nomes (ex: "ROMA, ITALIA" e "ITALIA, ROMA" → "ITALIA + ROMA")
+    def normaliza_modelo(m):
+        if "," in m:
+            partes = sorted([p.strip() for p in m.split(",")])
+            return " + ".join(partes)
+        return m
+
+    df["MODELO"] = df["MODELO"].apply(normaliza_modelo)
+
     # Normaliza variação de acentuação em PRODUÇÃO
     df["DESTINO"] = df["DESTINO"].str.replace("PRODUCAO", "PRODUÇÃO")
 
