@@ -19,6 +19,7 @@ MESES = {
     "FEV 26": "FEV%2026",
     "MARC 26": "MARC%2026",
     "ABR 26": "ABR%2026",
+    "MAIO 26": "MAIO%2026",
 }
 ORDEM_MESES = list(MESES.keys())
 DESTINOS_VENDA = ["ESTOQUE", "PRODUÇÃO", "VENDA", "PRODUCAO"]
